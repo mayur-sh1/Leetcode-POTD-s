@@ -1,0 +1,42 @@
+3163. String Compression III
+Solved
+class Solution {
+    public String compressedString(String word) {
+        if(word.length()==1) return "1"+word.charAt(0);
+        String ans="";
+        char prev=word.charAt(0);
+        int i=1;
+        int count=1;
+        while(i<word.length()){
+            if(prev==word.charAt(i)) count++;
+            else {
+                if(count>0 && count<=9){
+                    ans=ans+count+prev;
+                    prev=word.charAt(i);
+                    count=1;
+                }
+                else {
+                    int kitni_bar=count/9;
+                    int kitna_bacha=count%9;
+                    while(kitni_bar -- >0){
+                        ans=ans+"9"+prev;
+                    }
+                    if(kitna_bacha>0) ans=ans+kitna_bacha+prev;
+                    count=1;
+                    prev=word.charAt(i);
+                }
+            }
+            i++;
+        }
+        if(count>0 && count<=9)  ans=ans+count+prev;
+        else {
+            int kitni_bar=count/9;
+            int kitna_bacha=count%9;
+            while(kitni_bar -- >0){
+                ans=ans+"9"+prev;
+            }
+            if(kitna_bacha>0) ans=ans+kitna_bacha+prev;
+        }   
+        return ans;
+}
+}
