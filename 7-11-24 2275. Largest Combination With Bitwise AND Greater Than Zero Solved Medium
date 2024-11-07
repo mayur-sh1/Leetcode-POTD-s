@@ -1,0 +1,33 @@
+You are given an array of positive integers candidates. Evaluate the bitwise AND of every combination of numbers of candidates. Each number in candidates may only be used once in each combination.
+EXPLAINATION:it is essential to review the behavior of the AND operator. Consider the following example:
+
+. 010110
+& 001010
+& 100011
+= 000010
+
+We can infer that 2nd bit from the last is common , hence the value is naturally greater than 0, because of the position.
+
+We have to find the bit which is common in maximum elements in num.
+
+As we observe, only those bits where all corresponding bits are 1 will yield a 1 in the result; otherwise, the bit will be 0. Consequently, if the result of an AND operation contains a 1 in any position, the result is greater than 0.
+
+Our primary objective, therefore, is to identify the position of the most frequently occurring common 1 bit across multiple values. Finding this will allow us to determine the maximum possible value from an AND operation where at least one bit is set to 1. This bitwise approach ensures that the result will always be greater than 0 if any common 1 bits exist.
+
+
+CODE:
+public int largestCombination(int[] arr) {
+        int [] setBitposi=new int[33];
+        for(int i=0;i<arr.length;i++){
+            int n=arr[i];
+            int posi=0;
+            while(n!=0){
+                if(n%2==1) setBitposi[posi]++;
+                posi++;
+                n=n/2;
+            }
+        }
+        int maxx=Integer.MIN_VALUE;
+        for(int i=0;i<33;i++) maxx=Math.max(maxx,setBitposi[i]);
+        return maxx;
+    }
