@@ -1,0 +1,45 @@
+Count the Number of Fair Pairs
+Solved
+
+TC:O(N*LONG N)
+
+class Solution {
+    public long countFairPairs(int[] nums, int lower, int upper) {
+    Arrays.sort(nums);
+    long count = 0;
+    for (int i = 0; i < nums.length - 1; i++) {
+        int left = i + 1;
+        int right = nums.length - 1;
+
+        // Find the left bound for the range where nums[i] + nums[j] >= lower
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[i] + nums[mid] >= lower) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        int lowerBound = left;
+
+        // Reset right pointer to find the right bound for nums[i] + nums[j] <= upper
+        left = i + 1;
+        right = nums.length - 1;
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+            if (nums[i] + nums[mid] <= upper) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+        int upperBound = right;
+
+        // Count valid pairs in the range [lowerBound, upperBound]
+        if (lowerBound <= upperBound) {
+            count += upperBound - lowerBound + 1;
+        }
+    }
+    return count;
+}
+}
